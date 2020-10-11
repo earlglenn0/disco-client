@@ -1,38 +1,89 @@
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  background-color: black;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.bulb {
+  height: 100px;
+  width: 100px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 6px;
+  border: 5px solid transparent;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+.body {
+  width: fit-content;
+  margin-top: 50px;
+  display: inline-block;
+  margin: 30px;
+  padding-bottom: 10px;
+  height: 800px;
+}
+
+h2 {
+  display: inline;
+  margin-right: 10px;
+  margin-left: 20px;
+}
+
+.space {
+  margin-right: 50px;
+}
+
+.controls {
+  padding-bottom: 100px;
+}
+.controls button {
+  height: 30px;
+  width: 100px;
+}
+
+.controls button {
+  height: 30px;
+  width: 100px;
+  background-color: white;
+  border: 1px solid black
+}
+
+.controls button:hover {
+  background-color: yellow;
+  border: 1px solid transparent
+}
+
+button.active {
+  background-color: orange;
+}
+button:disabled {
+  background-color: gray;
+  color: white;
+}
+
+h1 {
+  font-size: 50px;
+  margin: 0;
+  padding-bottom: 30px;
+}
+
+.special {
+  margin-left: 50px;
+}
+
+.flashing_low{
+  animation: blinker 1s linear infinite;
+}
+.flashing_medium{
+  animation: blinker .75s linear infinite;
+}
+.flashing_high{
+  animation: blinker .5s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+    border: 5px solid rgb(255, 255, 255, .5);
   }
 }
