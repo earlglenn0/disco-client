@@ -8,7 +8,7 @@ function App() {
   const [discoData, setDiscoData] = useState(null)
   useEffect(() => {
     socket.on('connect', () => {
-      console.log('client connect')
+      console.log('client connect ')
     })
     socket.on('STATE_CHANGED', (data) => {
       console.log({ data })
