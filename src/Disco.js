@@ -33,43 +33,64 @@ function Disco(props) {
   const [intervalObj, setIntervalObj] = useState(null)
   const [lights, setLights] = useState(grayLights)
 
-  /** TURN ON/OFF */
   useEffect(() => {
-    if (!isOn) {
-      setLights(grayLights)
-      clearInterval(intervalObj)
-      setIntervalObj(null)
-    }
-    if (isOn) {
-      setIntervalObj(setInterval(() => {
-        console.log('turning on')
-        setLights([...brightLights])
-      }, 1000))
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOn])
+    if (data && Object.keys(data).length) {
+      console.log({ isOn, xxx: data.isOn })
 
-  /** SET SPEED */
-  useEffect(() => {
-    clearInterval(intervalObj)
-    if (!isOn) {
-      return
+      /** TURN ON/OFF */
+      if (isOn !== data.isOn) {
+        setIsOn(data.isOn)
+        if (!isOn) {
+          setLights(grayLights)
+          clearInterval(intervalObj)
+          setIntervalObj(null)
+        }
+        if (data.isOn) {
+          setIntervalObj(setInterval(() => {
+            console.log('turning on')
+            setLights([...brightLights])
+          }, 1000))
+        }
+      }
+
+      /** SET SPEED */
+      if (speed !== data.speed) {
+        setSpeed(data.speed)
+        clearInterval(intervalObj)
+        if (!isOn) {
+          return
+        }
+        const intervalSpeed = {
+          low: 1000,
+          medium: 750,
+          high: 500
+        }[data.speed]
+        setIntervalObj(setInterval(() => {
+          console.log('set speed')
+          setLights([...(isOn ? brightLights : grayLights)])
+        }, intervalSpeed))
+      }
+
+      /** SET COLOR */
+      if (color !== data.color) {
+        setColor(data.color)
+      }
+
+      /** SET LIGHT MODE */
+      if (lightMode !== data.lightMode) {
+        setLightMode(data.lightMode)
+      }
+
+      if (isBroken !== data.isBroken) {
+        setIsBroken(data.isBroken)
+      }
     }
-    const intervalSpeed = {
-      low: 1000,
-      medium: 750,
-      high: 500
-    }[speed]
-    setIntervalObj(setInterval(() => {
-      console.log('set speed')
-      setLights([...(isOn ? brightLights : grayLights)])
-    }, intervalSpeed))
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [speed])
+  },[data])
 
   const getDisplayLights = () => {
     let displayLights = lights
-    if (!isOn) {
+    if (!isOn || isBroken) {
       return grayLights
     }
     if (color === 'changing') {
@@ -78,21 +99,6 @@ function Disco(props) {
         6
       )
     }
-    if (isBroken) {
-      displayLights[0][0] = 'gray'
-      displayLights[0][3] = 'gray'
-      displayLights[1][1] = 'gray'
-      displayLights[1][5] = 'gray'
-      displayLights[2][0] = 'gray'
-      displayLights[2][3] = 'gray'
-      displayLights[3][4] = 'gray'
-      displayLights[3][1] = 'gray'
-      displayLights[4][0] = 'gray'
-      displayLights[4][1] = 'gray'
-      displayLights[4][2] = 'gray'
-      displayLights[5][0] = 'gray'
-      displayLights[5][5] = 'gray'
-    }
     return displayLights
   }
   const disabledControl = !isOn
@@ -100,6 +106,9 @@ function Disco(props) {
     let className = 'bulb'
     if (lightMode === 'flashing' && isOn && bulbColor !== 'gray') {
       className += ` flashing_${speed}`
+    }
+    if (isBroken) {
+      className += ' broken'
     }
     return className
   }
@@ -112,17 +121,18 @@ function Disco(props) {
           key={option}
           label={option.toUpperCase()}
           active={status === option}
-          onClick={onClick.bind(null, option)}
+          onClick={sendEvent.bind(null, `SET_${name.replace(' ', '').toUpperCase()}_TO_${option.toUpperCase()}`)}
           disabled={disabled}
         />
       ))}
     </>
   )
-
+  const clicks = Number(data && data.clicks)
+  const max_clicks = Number(data && data.max_clicks)
   return (
     <div className='App'>
       <div className='body'>
-        <h1>DISCO MACHINE</h1>
+        <h1>{`DISCO MACHINE --- ${clicks}/${max_clicks}`}</h1>
         {getDisplayLights().map((e, i) => (
           <div className='row' key={i}>
             {e.map((ee, i) => (
@@ -157,11 +167,7 @@ function Disco(props) {
           label={isOn ? 'TURN OFF' : 'TURN ON'}
           onClick={() => sendEvent(isOn ? 'TURN_OFF' : 'TURN_ON')}
           className='special'
-        />
-        <Button
-          label={isBroken ? 'FIX' : 'BREAK'}
-          onClick={() => setIsBroken(!isBroken)}
-          className='special'
+          disabled={isBroken}
         />
       </div>
     </div>

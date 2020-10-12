@@ -11,7 +11,8 @@ function App() {
       console.log('client connect ')
     })
     socket.on('STATE_CHANGED', (data) => {
-      console.log({ data })
+      console.log(data)
+      setDiscoData(data)
     })
     socket.on('disconnect', () => {
       console.log('client disconnect')
