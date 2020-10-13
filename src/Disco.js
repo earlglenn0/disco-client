@@ -37,22 +37,12 @@ function Disco(props) {
 
       /** TURN ON/OFF */
       if (isOn !== data.isOn) {
-        setIsOn(data.isOn)
-        if (!isOn) {
-          setLights(grayLights)
-        }
-        if (data.isOn) {
-          setLights([...brightLights])
-        }
+        setIsOn(data.isOn) 
       }
 
       /** SET SPEED */
       if (speed !== data.speed) {
         setSpeed(data.speed)
-        if (!isOn) {
-          return
-        }
-        setLights([...(isOn ? brightLights : grayLights)])
       }
 
       /** SET COLOR */
@@ -68,6 +58,8 @@ function Disco(props) {
       if (isBroken !== data.isBroken) {
         setIsBroken(data.isBroken)
       }
+
+      setLights(isOn ? brightLights : grayLights)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[data])
