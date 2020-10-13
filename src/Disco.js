@@ -30,45 +30,29 @@ function Disco(props) {
   const [color, setColor] = useState('steady')
   const [speed, setSpeed] = useState('low')
   const [lightMode, setLightMode] = useState('steady')
-  const [intervalObj, setIntervalObj] = useState(null)
   const [lights, setLights] = useState(grayLights)
 
   useEffect(() => {
     if (data && Object.keys(data).length) {
-      console.log({ isOn, xxx: data.isOn })
 
       /** TURN ON/OFF */
       if (isOn !== data.isOn) {
         setIsOn(data.isOn)
         if (!isOn) {
           setLights(grayLights)
-          clearInterval(intervalObj)
-          setIntervalObj(null)
         }
         if (data.isOn) {
-          setIntervalObj(setInterval(() => {
-            console.log('turning on')
-            setLights([...brightLights])
-          }, 1000))
+          setLights([...brightLights])
         }
       }
 
       /** SET SPEED */
       if (speed !== data.speed) {
         setSpeed(data.speed)
-        clearInterval(intervalObj)
         if (!isOn) {
           return
         }
-        const intervalSpeed = {
-          low: 1000,
-          medium: 750,
-          high: 500
-        }[data.speed]
-        setIntervalObj(setInterval(() => {
-          console.log('set speed')
-          setLights([...(isOn ? brightLights : grayLights)])
-        }, intervalSpeed))
+        setLights([...(isOn ? brightLights : grayLights)])
       }
 
       /** SET COLOR */
