@@ -13,10 +13,10 @@ const multiplyEachItemBy = (arr, num) => {
 
 /** CONSTANTS */
 const brightColors = ['red', 'yellow', 'orange', 'purple', 'blue', 'green']
-const grayColors = fill(Array(6), 'transparent')
+const grayColors = fill(Array(4), 'transparent')
 const grayLights = multiplyEachItemBy(grayColors)
 const brightLights = multiplyEachItemBy(brightColors)
-// const lightsOff = 
+// const lightsOff =
 
 
 /** CUSTOM ELEMENTS */
@@ -39,7 +39,7 @@ function Disco(props) {
 
       /** TURN ON/OFF */
       if (isOn !== data.isOn) {
-        setIsOn(data.isOn) 
+        setIsOn(data.isOn)
       }
 
       /** SET SPEED */
@@ -74,7 +74,7 @@ function Disco(props) {
     if (color === 'changing') {
       displayLights = chunk(
         shuffle(flatten(multiplyEachItemBy(brightColors))),
-        6
+        4
       )
     }
     return displayLights
@@ -118,19 +118,19 @@ function Disco(props) {
               <div 
                 key={`${ee}-${i}`} 
                 className={getBulbClassName(ee)} 
-                style={{ backgroundColor:  ee, boxShadow: `0px 0px 70px 40px ${ee}` }}>
+                style={{ backgroundColor:  ee, boxShadow: `0px 0px 30px 10px ${ee}` }}>
 
                 <div class="ray_box">
-                  <div class="ray ray1" style={{ backgroundColor:  ee }}></div>
-                  <div class="ray ray2" style={{ backgroundColor:  ee }}></div>
-                  <div class="ray ray3" style={{ backgroundColor:  ee }}></div>
-                  <div class="ray ray4" style={{ backgroundColor:  ee }}></div>
-                  <div class="ray ray5" style={{ backgroundColor:  ee }}></div>
-                  <div class="ray ray6" style={{ backgroundColor:  ee }}></div>
-                  <div class="ray ray7" style={{ backgroundColor:  ee }}></div>
-                  <div class="ray ray8" style={{ backgroundColor:  ee }}></div>
-                  <div class="ray ray9" style={{ backgroundColor:  ee }}></div>
-                  <div class="ray ray10" style={{ backgroundColor:  ee }}></div>
+                  <div class="ray ray1" style={{ backgroundColor:  ee, boxShadow: `0px 0px 60px 45px ${ee}` }}></div>
+                  <div class="ray ray2" style={{ backgroundColor:  ee, boxShadow: `0px 0px 60px 45px ${ee}` }}></div>
+                  <div class="ray ray3" style={{ backgroundColor:  ee, boxShadow: `0px 0px 60px 45px ${ee}` }}></div>
+                  <div class="ray ray4" style={{ backgroundColor:  ee, boxShadow: `0px 0px 60px 45px ${ee}` }}></div>
+                  <div class="ray ray5" style={{ backgroundColor:  ee, boxShadow: `0px 0px 60px 45px ${ee}` }}></div>
+                  <div class="ray ray6" style={{ backgroundColor:  ee, boxShadow: `0px 0px 60px 45px ${ee}` }}></div>
+                  <div class="ray ray7" style={{ backgroundColor:  ee, boxShadow: `0px 0px 60px 45px ${ee}` }}></div>
+                  <div class="ray ray8" style={{ backgroundColor:  ee, boxShadow: `0px 0px 60px 45px ${ee}` }}></div>
+                  <div class="ray ray9" style={{ backgroundColor:  ee, boxShadow: `0px 0px 60px 45px ${ee}` }}></div>
+                  <div class="ray ray10" style={{ backgroundColor:  ee, boxShadow: `0px 0px 60px 45px ${ee}` }}></div>
                 </div>
               </div>
             ))}
