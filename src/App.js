@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client'
 
 import Disco from './Disco'
-const socket = io('http://localhost:3001/')
+const socket = io('http://socket.localhost/')
 
 function App() {
   const [discoData, setDiscoData] = useState(null)
@@ -11,7 +11,8 @@ function App() {
       console.log('client connect ')
     })
     socket.on('STATE_CHANGED', (data) => {
-      console.log(data)
+      // console.log(data)
+      console.log('PORT: ', data.PORT)
       setDiscoData(data)
     })
     socket.on('disconnect', () => {
@@ -24,7 +25,7 @@ function App() {
   }
   return (
     <div className='App'>
-      <Disco data={discoData} sendEvent={sendEvent}/>
+      <Disco data={discoData} sendEvent={sendEvent} />
     </div>
   );
 }

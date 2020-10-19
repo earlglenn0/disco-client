@@ -35,7 +35,7 @@ function Disco(props) {
 
   useEffect(() => {
     if (data && Object.keys(data).length) {
-      console.log({ isOn, xxx: data.isOn })
+      // console.log({ isOn, xxx: data.isOn })
 
       /** TURN ON/OFF */
       if (isOn !== data.isOn) {
@@ -85,8 +85,8 @@ function Disco(props) {
         setIsBroken(data.isBroken)
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[data])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data])
 
   const getDisplayLights = () => {
     let displayLights = lights
@@ -112,8 +112,8 @@ function Disco(props) {
     }
     return className
   }
-  
-  const Control = ({ name = '', onClick = () => {}, options = [],  disabled, status }) => (
+
+  const Control = ({ name = '', onClick = () => { }, options = [], disabled, status }) => (
     <>
       <h2>{name.toUpperCase()}</h2>
       {options.map(option => (
