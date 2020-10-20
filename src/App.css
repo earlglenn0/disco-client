@@ -1,30 +1,38 @@
 .App {
   text-align: center;
-  background-color: black;
+  background-color: #121719;
   color: white;
 }
 
+.body {
+  width: 100%;
+  margin-top: 50px;
+  display: inline-block;
+  margin: auto;
+  padding-bottom: 10px;
+  height: 800px;
+}
+
+.disco_room {
+  max-width: 1200px;
+  background-color: #121719;
+}
+
 .bulb {
-  height: 100px;
-  width: 100px;
+  height: 65px;
+  width: 65px;
   background-color: #bbb;
   border-radius: 50%;
   display: inline-block;
-  margin: 6px;
-  border: 5px solid transparent;
+  margin: 7rem;
+  border: none;
 }
 
-.bulb.broken {
-  border: 5px solid maroon;
-}
-
-.body {
-  width: fit-content;
-  margin-top: 50px;
-  display: inline-block;
-  margin: 30px;
-  padding-bottom: 10px;
-  height: 800px;
+h4 {
+  color: #121719;
+  font-size: .8rem;
+  font-weight: 300;
+  margin-bottom: 5px;
 }
 
 h2 {
@@ -37,17 +45,27 @@ h2 {
   margin-right: 50px;
 }
 
-.controls {
-  padding-bottom: 100px;
+.remote_wrapper {
+  top: 10%;
+  right: 50px;
+  width: 150px;
+  height: 320px;
+  padding: 1rem;
+  position: fixed;
+  border-radius: 30px;
+  background-color: white;
 }
-.controls button {
-  height: 30px;
-  width: 100px;
+
+.controls {
+  text-align: left;
 }
 
 .controls button {
   height: 30px;
-  width: 100px;
+  width: 65px;
+  border-radius: 4px;
+  margin: 4px;
+  font-size: .6rem;
   background-color: white;
   border: 1px solid black
 }
@@ -65,6 +83,26 @@ button:disabled {
   color: white;
 }
 
+.disco_balls {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+}
+
+.ball_2 {
+  width: 150px;
+  transform: rotate(30deg);
+  filter: grayscale(1);
+}
+.ball_1 {
+  width: 150px;
+  transform: scale(-1);
+  filter: grayscale(1);
+}
+
+
 h1 {
   font-size: 50px;
   margin: 0;
@@ -72,22 +110,124 @@ h1 {
 }
 
 .special {
-  margin-left: 50px;
+  height: 40px !important;
+  width: 40px !important;
+  border-radius: 20px !important;
+  background-color: tomato !important;
+  outline-style: none;
 }
 
 .flashing_low{
   animation: blinker 1s linear infinite;
 }
 .flashing_medium{
-  animation: blinker .75s linear infinite;
+  animation: blinker .5s linear infinite;
 }
 .flashing_high{
-  animation: blinker .5s linear infinite;
+  animation: blinker .2s linear infinite;
 }
 
 @keyframes blinker {
   50% {
     opacity: 0;
-    border: 5px solid rgb(255, 255, 255, .5);
   }
+}
+
+.ray_box {
+  position: absolute;
+  margin: auto;
+  /* border: 1px solid red; */
+  width:65px;
+  height: 65px;
+  -webkit-animation: ray_anim 120s linear infinite;
+  animation: ray_anim 120s linear infinite;
+}
+.ray {  
+    background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
+		background: linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%); 
+    margin-left:10px;
+    border-radius:80% 80% 0 0;
+    position:absolute;
+    opacity:0.1;
+}
+
+.ray1 {
+  height:250px;
+  width:30px;
+  -webkit-transform: rotate(180deg);
+  top:-180px;
+  left: 8px;
+}
+.ray2 {
+  height: 250px;
+  width: 8px;
+  -webkit-transform: rotate(220deg);
+  top: -180px;
+  left: 90px;
+}
+.ray3 {
+  height:250px;
+  width:50px;
+  -webkit-transform: rotate(250deg);
+  top: -115px;
+  left: 90px;
+}
+.ray4 {
+  height:200px;
+  width:14px;
+  -webkit-transform: rotate(305deg);
+  top: 5px;
+  left: 100px;
+}
+.ray5 {
+  height:210px;
+  width:30px;
+  -webkit-transform: rotate(-15deg);
+  top: 30px;
+  left: 35px;
+}
+.ray6 {
+  height: 250px;
+  width: 50px;
+  -webkit-transform: rotate(30deg);
+  top: 20px;
+  left: -60px;
+}
+.ray7 {
+  height:280px;
+  width:10px;
+  -webkit-transform: rotate(70deg);
+  top: -50px;
+  left: -100px;
+}
+.ray8 {
+  height:250px;
+  width:30px;
+  -webkit-transform: rotate(100deg);
+  top: -95px;
+  left: -100px;
+}
+.ray9 {
+  height: 300px;
+  width: 15px;
+  -webkit-transform: rotate(120deg);
+  top: -160px;
+  left: -90px;
+}
+.ray10 {
+  height: 320px;
+  width: 23px;
+  -webkit-transform: rotate(150deg);
+  top: -255px;
+  left: -75px;
+}
+
+
+@-webkit-keyframes ray_anim {
+		0% { -webkit-transform: rotate(0deg); transform: rotate(0deg);}
+    100% { -webkit-transform: rotate(360deg); transform: rotate(360deg);}
+}
+
+.Bot_lights {
+  transform: scaleY(-1);
 }

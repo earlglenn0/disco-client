@@ -4,6 +4,7 @@ import fill from 'lodash/fill'
 import shuffle from 'lodash/shuffle'
 import flatten from 'lodash/flatten'
 import chunk from 'lodash/chunk'
+import DiscoLights from './DiscoLights'
 
 /** HELPERS */
 const multiplyEachItemBy = (arr, num) => {
@@ -11,10 +12,11 @@ const multiplyEachItemBy = (arr, num) => {
 }
 
 /** CONSTANTS */
-const brightColors = ['red', 'yellow', 'orange', 'purple', 'blue', 'green']
-const grayColors = fill(Array(6), 'gray')
+const brightColors = ['red', 'yellow', 'orange', 'green']
+const grayColors = fill(Array(4), 'transparent')
 const grayLights = multiplyEachItemBy(grayColors)
 const brightLights = multiplyEachItemBy(brightColors)
+// const lightsOff = 
 
 
 /** CUSTOM ELEMENTS */
@@ -30,7 +32,6 @@ function Disco(props) {
   const [color, setColor] = useState('steady')
   const [speed, setSpeed] = useState('low')
   const [lightMode, setLightMode] = useState('steady')
-  const [intervalObj, setIntervalObj] = useState(null)
   const [lights, setLights] = useState(grayLights)
 
   useEffect(() => {
@@ -40,35 +41,11 @@ function Disco(props) {
       /** TURN ON/OFF */
       if (isOn !== data.isOn) {
         setIsOn(data.isOn)
-        if (!isOn) {
-          setLights(grayLights)
-          clearInterval(intervalObj)
-          setIntervalObj(null)
-        }
-        if (data.isOn) {
-          setIntervalObj(setInterval(() => {
-            console.log('turning on')
-            setLights([...brightLights])
-          }, 1000))
-        }
       }
 
       /** SET SPEED */
       if (speed !== data.speed) {
         setSpeed(data.speed)
-        clearInterval(intervalObj)
-        if (!isOn) {
-          return
-        }
-        const intervalSpeed = {
-          low: 1000,
-          medium: 750,
-          high: 500
-        }[data.speed]
-        setIntervalObj(setInterval(() => {
-          console.log('set speed')
-          setLights([...(isOn ? brightLights : grayLights)])
-        }, intervalSpeed))
       }
 
       /** SET COLOR */
@@ -84,6 +61,8 @@ function Disco(props) {
       if (isBroken !== data.isBroken) {
         setIsBroken(data.isBroken)
       }
+
+      setLights(isOn ? brightLights : grayLights)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])
@@ -96,7 +75,7 @@ function Disco(props) {
     if (color === 'changing') {
       displayLights = chunk(
         shuffle(flatten(multiplyEachItemBy(brightColors))),
-        6
+        4
       )
     }
     return displayLights
@@ -115,7 +94,7 @@ function Disco(props) {
 
   const Control = ({ name = '', onClick = () => { }, options = [], disabled, status }) => (
     <>
-      <h2>{name.toUpperCase()}</h2>
+      <h4>{name.toUpperCase()}</h4>
       {options.map(option => (
         <Button
           key={option}
@@ -131,44 +110,68 @@ function Disco(props) {
   const max_clicks = Number(data && data.max_clicks)
   return (
     <div className='App'>
-      <div className='body'>
+      <div className='body disco_room'>
         <h1>{`DISCO MACHINE --- ${clicks}/${max_clicks}`}</h1>
+        <DiscoLights />
         {getDisplayLights().map((e, i) => (
           <div className='row' key={i}>
             {e.map((ee, i) => (
-              <span key={`${ee}-${i}`} className={getBulbClassName(ee)} style={{ backgroundColor: ee }}></span>
+              <div
+                key={`${ee}-${i}`}
+                className={getBulbClassName(ee)}
+                style={{ backgroundColor: ee, boxShadow: `0px 0px 70px 40px ${ee}` }}>
+
+                <div class="ray_box">
+                  <div class="ray ray1" style={{ backgroundColor: ee }}></div>
+                  <div class="ray ray2" style={{ backgroundColor: ee }}></div>
+                  <div class="ray ray3" style={{ backgroundColor: ee }}></div>
+                  <div class="ray ray4" style={{ backgroundColor: ee }}></div>
+                  <div class="ray ray5" style={{ backgroundColor: ee }}></div>
+                  <div class="ray ray6" style={{ backgroundColor: ee }}></div>
+                  <div class="ray ray7" style={{ backgroundColor: ee }}></div>
+                  <div class="ray ray8" style={{ backgroundColor: ee }}></div>
+                  <div class="ray ray9" style={{ backgroundColor: ee }}></div>
+                  <div class="ray ray10" style={{ backgroundColor: ee }}></div>
+                </div>
+              </div>
             ))}
           </div>
         ))}
+        <div className='Bot_lights'>
+          <DiscoLights />
+        </div>
+
       </div>
-      <div className='controls'>
-        <Control
-          name='color'
-          onClick={setColor}
-          options={['steady', 'changing']}
-          status={color}
-          disabled={disabledControl}
-        />
-        <Control
-          name='speed'
-          onClick={setSpeed}
-          options={['low', 'medium', 'high']}
-          status={speed}
-          disabled={disabledControl}
-        />
-        <Control
-          name='light mode'
-          onClick={setLightMode}
-          options={['steady', 'flashing']}
-          status={lightMode}
-          disabled={disabledControl}
-        />
-        <Button
-          label={isOn ? 'TURN OFF' : 'TURN ON'}
-          onClick={() => sendEvent(isOn ? 'TURN_OFF' : 'TURN_ON')}
-          className='special'
-          disabled={isBroken}
-        />
+      <div className='remote_wrapper'>
+        <div className='controls'>
+          <Button
+            label={isOn ? 'OFF' : 'ON'}
+            onClick={() => sendEvent(isOn ? 'TURN_OFF' : 'TURN_ON')}
+            className='special'
+            disabled={isBroken}
+          />
+          <Control
+            name='color'
+            onClick={setColor}
+            options={['steady', 'changing']}
+            status={color}
+            disabled={disabledControl}
+          />
+          <Control
+            name='speed'
+            onClick={setSpeed}
+            options={['low', 'medium', 'high']}
+            status={speed}
+            disabled={disabledControl}
+          />
+          <Control
+            name='light mode'
+            onClick={setLightMode}
+            options={['steady', 'flashing']}
+            status={lightMode}
+            disabled={disabledControl}
+          />
+        </div>
       </div>
     </div>
   );
